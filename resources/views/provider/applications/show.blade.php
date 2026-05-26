@@ -636,7 +636,7 @@
                     <i class="ti ti-file-text"></i>
                     Documents
                 </div>
-                @forelse($application->documents as $document)
+                @forelse($application->documents ?? [] as $document)
                     <div class="documents-list">
                         <div class="document-item">
                             <div class="document-name">
