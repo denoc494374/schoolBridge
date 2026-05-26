@@ -14,11 +14,13 @@ class Application extends Model
         'student_id',
         'status',
         'remarks',
+        'documents',
         'submitted_at',
     ];
 
     protected $casts = [
         'submitted_at' => 'datetime',
+        'documents' => 'array',
     ];
 
     public function scholarship()
