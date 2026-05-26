@@ -83,6 +83,9 @@ class StudentApplicationController extends Controller
                 'application_id' => $application->id,
                 'file_path' => $path,
                 'document_type' => $documentFile->getClientOriginalExtension(),
+                'file_data' => base64_encode(file_get_contents($documentFile->getRealPath())),
+                'original_filename' => $documentFile->getClientOriginalName(),
+                'mime_type' => $documentFile->getMimeType(),
                 'uploaded_at' => now(),
             ]);
 

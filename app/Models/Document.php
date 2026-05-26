@@ -13,6 +13,9 @@ class Document extends Model
         'application_id',
         'file_path',
         'document_type',
+        'file_data',
+        'original_filename',
+        'mime_type',
         'uploaded_at',
     ];
 

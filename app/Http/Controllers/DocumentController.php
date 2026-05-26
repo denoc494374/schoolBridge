@@ -22,6 +22,20 @@ class DocumentController extends Controller
             abort(403);
         }
 
+        if ($document->file_data) {
+            $fileContent = base64_decode($document->file_data);
+            $mimeType = $document->mime_type ?? 'application/octet-stream';
+            $filename = $document->original_filename ?? 'download';
+            
+            return response()->streamDownload(
+                function() use ($fileContent) {
+                    echo $fileContent;
+                },
+                $filename,
+                ['Content-Type' => $mimeType]
+            );
+        }
+
         return Storage::disk('local')->download($document->file_path);
     }
 }
