@@ -66,6 +66,8 @@ class StudentApplicationController extends Controller
             return redirect()->route('student.scholarships.show', $scholarship)->with('error', 'You have already applied to this scholarship.');
         }
 
+        $submittedDocuments = [];
+
         $application = Application::create([
             'scholarship_id' => $scholarship->id,
             'student_id' => $student->id,
@@ -83,7 +85,19 @@ class StudentApplicationController extends Controller
                 'document_type' => $documentFile->getClientOriginalExtension(),
                 'uploaded_at' => now(),
             ]);
+
+            // Add document info to submitted_documents array
+            $submittedDocuments[] = [
+                'filename' => $documentFile->getClientOriginalName(),
+                'file_path' => $path,
+                'document_type' => $documentFile->getClientOriginalExtension(),
+                'size' => $documentFile->getSize(),
+                'uploaded_at' => now()->toIso8601String(),
+            ];
         }
+
+        // Update application with submitted documents
+        $application->update(['submitted_documents' => $submittedDocuments]);
 
         // Send confirmation email to student
         Mail::to($student->email)->queue(new ApplicationSubmittedMail($application));
