@@ -631,14 +631,13 @@
             @endif
 
             <!-- Documents Section -->
-            @if($application->documents->count())
             <div class="section-card">
                 <div class="section-title">
                     <i class="ti ti-file-text"></i>
                     Documents
                 </div>
-                <div class="documents-list">
-                    @foreach($application->documents as $document)
+                @forelse($application->documents as $document)
+                    <div class="documents-list">
                         <div class="document-item">
                             <div class="document-name">
                                 <i class="ti ti-file-pdf"></i>
@@ -648,21 +647,14 @@
                                 <i class="ti ti-download" style="margin-right: 4px;"></i>Download
                             </a>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @empty
+                    <div class="empty-state">
+                        <i class="ti ti-file-off"></i>
+                        <p style="margin-bottom: 0;">No documents uploaded for this application.</p>
+                    </div>
+                @endforelse
             </div>
-            @else
-            <div class="section-card">
-                <div class="section-title">
-                    <i class="ti ti-file-text"></i>
-                    Documents
-                </div>
-                <div class="empty-state">
-                    <i class="ti ti-file-off"></i>
-                    <p style="margin-bottom: 0;">No documents uploaded for this application.</p>
-                </div>
-            </div>
-            @endif
 
             <!-- Current Remarks Section -->
             <div class="section-card">
